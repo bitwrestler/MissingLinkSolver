@@ -6,10 +6,10 @@ mod tests;
 mod missing_link_solver
 {
 
-const MODE_NORMAL: isize = 0;
-const MODE_SOLVING_SCRAMBLED: isize = 1;
-const MODE_EDIT: isize = 2;
-const MODE_SOLVING: isize = 3;
+pub const MODE_NORMAL: isize = 0;
+pub const MODE_SOLVING_SCRAMBLED: isize = 1;
+pub const MODE_EDIT: isize = 2;
+pub const MODE_SOLVING: isize = 3;
 
 pub struct MLData {
     pub posit: [isize; 16],

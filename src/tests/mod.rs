@@ -8,5 +8,6 @@ mod tests {
         let sample = initbrd();
         assert_eq!(3,sample.blank_x);
         assert_eq!(0,sample.blank_y);
+        assert_eq!(MODE_NORMAL,sample.mode);
     }
 }

@@ -1,0 +1,4 @@
+[package]
+name = "missing_link_solver"
+version = "0.0.1"
+authors = [ "Eric Spencer from Javascript code from jaapsch@yahoo.com" ]

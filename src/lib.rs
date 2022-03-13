@@ -5,7 +5,7 @@ mod tests;
 pub mod missing_link_solver
 {
     pub mod ml_data;
-    mod ml_display;
+    pub mod ml_display;
     
 
 pub fn initbrd() -> self::ml_data::MLData {

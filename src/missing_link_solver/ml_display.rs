@@ -10,7 +10,7 @@ use super::ml_data::{SIZE_COLUMN, SIZE_TOTAL};
 
     impl MLDisplay
     {
-       pub fn new(data : super::ml_data::MLData)  -> MLDisplay
+       pub fn new(data : &super::ml_data::MLData)  -> Self
        {
            let mut d_struct = MLDisplay::default();
            for i in 0..SIZE_COLUMN {
@@ -46,7 +46,7 @@ use super::ml_data::{SIZE_COLUMN, SIZE_TOTAL};
             return s;
        }
 
-       pub fn dump_raw(&self) -> [usize;16]
+       pub fn dump_raw(&self) -> [usize;SIZE_TOTAL]
        {
         let mut ret : [usize;SIZE_TOTAL] = [BLANK_IDX;SIZE_TOTAL];
         let mut pos : usize = 0;
@@ -55,6 +55,17 @@ use super::ml_data::{SIZE_COLUMN, SIZE_TOTAL};
                 ret[pos] = self.cols[i][j];
                 pos+=1;
             }
+        }
+        return ret;
+       }
+
+       pub fn dump_col_raw(&self, idx : usize) -> [usize;SIZE_COLUMN]
+       {
+        let mut ret : [usize;SIZE_COLUMN] = [BLANK_IDX;SIZE_COLUMN];
+        let mut pos : usize = 0;
+        for j in 0..SIZE_COLUMN {
+            ret[pos] = self.cols[idx][j];
+            pos+=1;
         }
         return ret;
        }

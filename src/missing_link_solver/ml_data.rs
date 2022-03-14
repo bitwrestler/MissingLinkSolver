@@ -14,6 +14,26 @@ pub struct MLData {
 }
 
 impl MLData {
+    
+    pub fn domove(&mut self,y : usize)
+    {
+        //try up/down move
+        let mut c : usize = self.blank_y * 4 + self.blank_x;
+        while self.blank_y < y
+        {
+            self.posit[c] = self.posit[c + 4];
+            c+=4;
+            self.blank_y+=1;
+        }
+        while self.blank_y > y
+        {
+            self.posit[c]=self.posit[c-4];
+            c-=4;
+            self.blank_y-=1;
+        }
+        self.posit[c] = 12;
+    }
+    
     pub fn solved(&self) -> bool
     {
         for i in 0..SIZE_COLUMN

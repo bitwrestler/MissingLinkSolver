@@ -1,3 +1,4 @@
+#[allow(non_snake_case)]
 #[cfg(test)]
 mod tests {
     use crate::missing_link_solver::*;
@@ -10,6 +11,7 @@ mod tests {
         assert_eq!(3,sample.blank_x);
         assert_eq!(0,sample.blank_y);
         assert_eq!(ml_data::MODE_NORMAL,sample.mode);
+        assert!(sample.solved());
     }
 
     #[test]

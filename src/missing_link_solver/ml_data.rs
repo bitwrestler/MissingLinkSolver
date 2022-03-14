@@ -27,6 +27,18 @@ impl MLData {
         if self.blank_y==i*3 { self.blank_x=(self.blank_x-1) & 3; }
     }
 
+    pub fn doright(&mut self, i : usize)
+    {
+        //i == 0 = top row; 1 = bottom row
+        let c : usize = i*12;
+        let d=self.posit[c+3];
+        self.posit[c+3]=self.posit[c+2];
+        self.posit[c+2]=self.posit[c+1];
+        self.posit[c+1]=self.posit[c];
+        self.posit[c]=d;
+        if self.blank_y==i*3 {self.blank_x = (self.blank_x+1) & 3; }
+    }
+
     pub fn domove(&mut self,y : usize)
     {
         //try up/down move

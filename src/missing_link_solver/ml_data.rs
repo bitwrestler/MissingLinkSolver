@@ -1,15 +1,18 @@
-    pub const MODE_NORMAL: usize = 0;
-    pub const MODE_SOLVING_SCRAMBLED: usize = 1;
-    pub const MODE_EDIT: usize = 2;
-    pub const MODE_SOLVING: usize = 3;
+use std::vec;
 
-    pub const SIZE_TOTAL : usize = 16;
-    pub const SIZE_COLUMN : usize = 4;
+pub const MODE_NORMAL: usize = 0;
+pub const MODE_SOLVING_SCRAMBLED: usize = 1;
+pub const MODE_EDIT: usize = 2;
+pub const MODE_SOLVING: usize = 3;
+
+pub const SIZE_TOTAL : usize = 16;
+pub const SIZE_COLUMN : usize = 4;
 
 pub struct MLData {
     pub posit: [usize; 16],
     pub blank_x: usize,
     pub blank_y: usize,
+    pub seq : Vec<usize>,
     pub mode: usize
 }
 
@@ -76,5 +79,29 @@ impl MLData {
             }
         }
         return true;
+    }
+
+    pub fn push(&mut self, i : &[&isize])
+    {
+        for m_ptr in i
+        {
+            let m = **m_ptr;
+            if m != 0
+            {
+                if m==4 || m==5 { self.doleft( util::cvt_int(m-4)  ); }
+                else if m==6 || m==7 { self.doright(util::cvt_int(m-6)); }
+                //else { domove(self.) }
+            }
+        }
+    }
+}
+
+mod util
+{
+    //convert signed int to uint asserting that it is possible
+    pub fn cvt_int(v : isize) -> usize
+    {
+        assert!(v > -1);
+        return v as usize;
     }
 }

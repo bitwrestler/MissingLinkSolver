@@ -13,6 +13,7 @@ pub fn initbrd() -> self::ml_data::MLData {
         posit: [0,1,2,12,4,5,6,3,4,5,6,7,8,9,10,11],
         blank_x: 3,
         blank_y: 0,
+        seq: Vec::new(),
         mode: ml_data::MODE_NORMAL
     }
 }

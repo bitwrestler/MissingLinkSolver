@@ -39,6 +39,26 @@ mod tests {
     }
 
     #[test]
+    pub fn MLData_doleft_topRow()
+    {
+        let expected2 : [usize;SIZE_COLUMN] = [0,3,7,11];
+        let mut sample = initbrd();
+        
+        sample.doleft(0);
+        assertColumn(&sample, expected2, 3);
+    }
+
+    #[test]
+    pub fn MLData_doleft_bottomRow()
+    {
+        let expected2 : [usize;SIZE_COLUMN] = [BLANK_IDX,3,7,8];
+        let mut sample = initbrd();
+        
+        sample.doleft(1);
+        assertColumn(&sample, expected2, 3);
+    }
+
+    #[test]
     pub fn MLDisplay_dump_value()
     {
         let sample = initbrd();

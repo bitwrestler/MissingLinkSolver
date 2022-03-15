@@ -1,4 +1,4 @@
-use std::vec;
+
 
 pub const MODE_NORMAL: usize = 0;
 pub const MODE_SOLVING_SCRAMBLED: usize = 1;
@@ -12,7 +12,7 @@ pub struct MLData {
     pub posit: [usize; 16],
     pub blank_x: usize,
     pub blank_y: usize,
-    pub seq : Vec<usize>,
+    pub seq : Vec<isize>,
     pub mode: usize
 }
 
@@ -42,17 +42,18 @@ impl MLData {
         if self.blank_y==i*3 {self.blank_x = (self.blank_x+1) & 3; }
     }
 
-    pub fn domove(&mut self,y : usize)
+    pub fn domove(&mut self,y : isize)
     {
         //try up/down move
         let mut c : usize = self.blank_y * 4 + self.blank_x;
-        while self.blank_y < y
+        
+        while util::compare(self.blank_y, y) == -1  //self.blank_y < y
         {
             self.posit[c] = self.posit[c + 4];
             c+=4;
             self.blank_y+=1;
         }
-        while self.blank_y > y
+        while  util::compare(self.blank_y, y) == 1  //self.blank_y > y
         {
             self.posit[c]=self.posit[c-4];
             c-=4;
@@ -85,12 +86,28 @@ impl MLData {
     {
         for m_ptr in i
         {
-            let m = **m_ptr;
+            let mut m = **m_ptr;
             if m != 0
             {
                 if m==4 || m==5 { self.doleft( util::cvt_int(m-4)  ); }
                 else if m==6 || m==7 { self.doright(util::cvt_int(m-6)); }
-                //else { domove(self.) }
+                else { self.domove( util::add(self.blank_y , m) ); }
+                if self.seq.len() > 0
+                {
+                    let last_ele = *self.seq.last().unwrap();
+                    if m >= 4 && last_ele == (m^2) { self.seq.pop(); }
+                    else if m<4 && last_ele < (4) {
+                        m += last_ele;
+                        let last_idx = self.seq.len() - 1;
+                        util::change_value(&mut self.seq, last_idx, m);
+                        if m == 0 { self.seq.pop(); }
+                    }
+                    else {
+                        self.seq.push(m);    
+                    }
+                } else {
+                    self.seq.push(m);
+                }
             }
         }
     }
@@ -98,10 +115,30 @@ impl MLData {
 
 mod util
 {
+    use std::convert::TryFrom;
+
     //convert signed int to uint asserting that it is possible
     pub fn cvt_int(v : isize) -> usize
     {
-        assert!(v > -1);
-        return v as usize;
+        return usize::try_from(v).ok().unwrap();
+    }
+
+    pub fn add(x : usize, y : isize) -> isize
+    {
+        let x2 = isize::try_from(x).ok().unwrap();
+        return x2 + y;
+    }
+
+    pub fn compare(x : usize, y : isize) -> isize
+    {
+        let x2 = isize::try_from(x).ok().unwrap();
+        if x2 < y { return -1; }
+        else if x2 > y {return 1; }
+        else { return 0; }
+    }
+
+    pub fn change_value(list : &mut Vec<isize>, idx : usize, value : isize)
+    {
+        list[idx] = value;
     }
 }

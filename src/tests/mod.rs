@@ -25,7 +25,7 @@ mod tests {
     }
 
     #[test]
-    pub fn MLData_domove_updown()
+    pub fn MLData_domove_downup()
     {
         let expected : [usize;SIZE_COLUMN] = [3,BLANK_IDX,7,11];
         let expected2 : [usize;SIZE_COLUMN] = [BLANK_IDX,3,7,11];
@@ -36,6 +36,22 @@ mod tests {
 
         sample.domove(0);
         assertColumn(&sample, expected2, 3);
+    }
+
+    #[test]
+    pub fn MLData_push_domove_downup()
+    {
+        let expected : [usize;SIZE_COLUMN] = [3,BLANK_IDX,7,11];
+        let expected2 : [usize;SIZE_COLUMN] = [BLANK_IDX,3,7,11];
+        let mut sample = initbrd();
+        
+        sample.push(&[1]);
+        assertColumn(&sample, expected, 3);
+
+        sample.push(&[-1]);
+        assertColumn(&sample, expected2, 3);
+
+        assert_eq!(sample.seq.len(), 0);
     }
 
     #[test]
@@ -59,6 +75,28 @@ mod tests {
     }
 
     #[test]
+    pub fn MLData_push_doleft_topRow()
+    {
+        let expected2 : [usize;SIZE_COLUMN] = [0,3,7,11];
+        let mut sample = initbrd();
+        sample.push(&[4]);
+        assertColumn(&sample,expected2,3);
+        assert_eq!(sample.seq.len(), 1);
+        assert_eq!(sample.seq[0],4);
+    }
+
+    #[test]
+    pub fn MLData_push_doleft_bottomRow()
+    {
+        let expected2 : [usize;SIZE_COLUMN] = [BLANK_IDX,3,7,8];
+        let mut sample = initbrd();
+        sample.push(&[5]);
+        assertColumn(&sample,expected2,3);
+        assert_eq!(sample.seq.len(), 1);
+        assert_eq!(sample.seq[0],5);
+    }
+
+    #[test]
     pub fn MLData_doright_topRow()
     {
         let expected2 : [usize;SIZE_COLUMN] = [2,3,7,11];
@@ -76,6 +114,24 @@ mod tests {
         
         sample.doright(1);
         assertColumn(&sample, expected2, 3);
+    }
+
+    #[test]
+    pub fn MLData_push_doright_topRow()
+    {
+        let expected2 : [usize;SIZE_COLUMN] = [2,3,7,11];
+        let mut sample = initbrd();
+        sample.push(&[6]);
+        assertColumn(&sample,expected2,3);
+    }
+
+    #[test]
+    pub fn MLData_push_doright_bottomRow()
+    {
+        let expected2 : [usize;SIZE_COLUMN] = [BLANK_IDX,3,7,10];
+        let mut sample = initbrd();
+        sample.push(&[7]);
+        assertColumn(&sample,expected2,3);
     }
 
     #[test]

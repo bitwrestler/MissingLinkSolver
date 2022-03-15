@@ -82,11 +82,11 @@ impl MLData {
         return true;
     }
 
-    pub fn push(&mut self, i : &[&isize])
+    pub fn push(&mut self, i : &[isize])
     {
         for m_ptr in i
         {
-            let mut m = **m_ptr;
+            let mut m = *m_ptr;
             if m != 0
             {
                 if m==4 || m==5 { self.doleft( util::cvt_int(m-4)  ); }
@@ -96,7 +96,7 @@ impl MLData {
                 {
                     let last_ele = *self.seq.last().unwrap();
                     if m >= 4 && last_ele == (m^2) { self.seq.pop(); }
-                    else if m<4 && last_ele < (4) {
+                    else if m<4 && last_ele < 4 {
                         m += last_ele;
                         let last_idx = self.seq.len() - 1;
                         util::change_value(&mut self.seq, last_idx, m);

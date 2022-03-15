@@ -135,6 +135,22 @@ mod tests {
     }
 
     #[test]
+    pub fn MLData_find_found()
+    {
+        let sample = initbrd();
+        let ret = sample.find(BLANK_IDX);
+        assert_eq!(ret,3);
+    }
+
+    #[test]
+    pub fn MLData_find_notfound()
+    {
+        let sample = initbrd();
+        let ret = sample.find(88);
+        assert_eq!(ret,SIZE_TOTAL-1);
+    }
+
+    #[test]
     pub fn MLDisplay_dump_value()
     {
         let sample = initbrd();

@@ -111,6 +111,15 @@ impl MLData {
             }
         }
     }
+
+    pub fn find(&self, tl : usize) -> usize
+    {
+        for aidx in 0..SIZE_TOTAL
+        {
+            if self.posit[aidx] == tl { return aidx; }
+        }
+        return SIZE_TOTAL - 1; //that doesn't seem right; not handling if doesn't find what it's looking for
+    }
 }
 
 mod util

@@ -151,12 +151,28 @@ mod tests {
     }
 
     #[test]
+    pub fn MLDisplay_dump_fmt()
+    {
+        let sample = initbrd();
+        let disp = MLDisplay::new(&sample);
+        let ret = disp.dump_fmt();
+        let expected = 
+"Tr  Ty  Tg  _
+Mr  My  Mg  Tw
+Mr  My  Mg  Mw
+Br  By  Bg  Bw
+";
+
+        assert_eq!(ret,expected);
+    }
+
+    #[test]
     pub fn MLDisplay_dump_value()
     {
         let sample = initbrd();
         let disp = MLDisplay::new(&sample);
 
-        let ret = disp.dump();
+        let ret = disp.dump_str();
 
         assert_eq!("TrMrMrBrTyMyMyByTgMgMgBg_TwMwBw",ret);
     }

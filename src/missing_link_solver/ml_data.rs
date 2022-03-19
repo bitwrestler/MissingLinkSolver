@@ -8,6 +8,8 @@ pub const MODE_SOLVING: usize = 3;
 pub const SIZE_TOTAL : usize = 16;
 pub const SIZE_COLUMN : usize = 4;
 
+pub const BLANK_IDX : usize = 12;
+
 pub struct MLData {
     pub posit: [usize; 16],
     pub blank_x: usize,

@@ -1,12 +1,10 @@
-use super::ml_data::{SIZE_COLUMN, SIZE_TOTAL};
+use super::ml_data::{SIZE_COLUMN, SIZE_TOTAL,BLANK_IDX};
 
 //#[cfg(windows)]
 //pub const LINE_ENDING: &'static str = "\r\n";
 //#[cfg(not(windows))]
 pub const LINE_ENDING: &'static str = "\n";
 
-
-    pub const BLANK_IDX : usize = 12;
     pub const TILES : &[&str] = &["Tr","Ty","Tg","Tw","Mr","My","Mg","Mw","Br","By","Bg","Bw","_"];
 
     pub struct MLDisplay

@@ -144,7 +144,7 @@ impl MLData {
             if tx_idx < 4 {break;}
         }
         let mut ty_idx : usize = 0;
-        if tx_idx>4
+        if tx_idx>=4
         {
             for tx in (0..=cl).rev()
             {
@@ -153,7 +153,9 @@ impl MLData {
                     ty_idx = ty;
                     if self.posit[ty*4+tx]==tl {break;}
                 }
-                if ty_idx >= 0 {break;} //this is really suspect... see orignal codde... this expression is always true
+                //if ty_idx >= 0 { //this condition is really suspect... see orignal codde... this expression is always true
+                    break;
+                //} 
             }
         }
 
@@ -183,7 +185,7 @@ impl MLData {
                 self.push(&[-1]);
                 //Move top column back
                 tx_idx=self.blank_x;
-                ty_idx += 1;
+                //ty_idx += 1; //this value is not used again on this path
                 while b>0 {self.push_single(6); b-=1; }
                 while b<0 {self.push_single(4); b+=1; }
             } else {
@@ -245,12 +247,50 @@ impl MLData {
             }
 
             //Move tile into top of column cl. Tile is in second row now, gap somewhere in top row.
-
-
+            if cl!=0 && self.blank_y != cl
+            {
+                //move gap at spot of tile now at top of column cl.
+                //gap to second row
+                if self.blank_x == tx_idx
+                {
+                    if tx_idx==3 { 
+                        self.push(&[4,1,6]); 
+                    } else {
+                        self.push(&[6,1,4]);
+                    }
+                } else {
+                    self.push_single(1);
+                }
+                //columns tile above gap
+                let mut a = cl;
+                while a < self.blank_x { self.push_single(6); a+=1; }
+                //pull down piece at top of column cl
+                self.push_single(-1);
+            }
+            //move top row so that the blank lies above the tile
+            while self.blank_x<tx_idx {self.push_single(6);}
+            while self.blank_x>tx_idx {self.push_single(4);}
+            //tile into top row
+            self.push_single(1);
+            while cl<tx_idx { self.push_single(4); tx_idx-=1; }
+            //gap back on top row.
+            self.push_single(-1);
         }
 
         //move down column if necessary
-
+        if tl>1
+        {
+            self.push_single(2); //gap to third row
+            if cl!=0
+            {
+                let mut a = self.blank_x - cl;
+                while a>0 { self.push_single(7); a-=1; }
+            }
+            self.push_single(1); //gap to column
+            let mut a = self.blank_x - cl;
+            while a>0 {self.push_single(5); a-=1;} //gap to column
+            self.push_single(-3); //column down
+        }
     }
 } //end impl
 

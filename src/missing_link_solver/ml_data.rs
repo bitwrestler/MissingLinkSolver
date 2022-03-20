@@ -1,4 +1,4 @@
-
+use std::collections::VecDeque;
 
 pub const MODE_NORMAL: usize = 0;
 pub const MODE_SOLVING_SCRAMBLED: usize = 1;
@@ -14,7 +14,7 @@ pub struct MLData {
     pub posit: [usize; 16],
     pub blank_x: usize,
     pub blank_y: usize,
-    pub seq : Vec<isize>,
+    pub seq : VecDeque<isize>,
     pub mode: usize
 }
 
@@ -102,19 +102,19 @@ impl MLData {
                 else { self.domove( util::add(self.blank_y , m) ); }
                 if self.seq.len() > 0
                 {
-                    let last_ele = *self.seq.last().unwrap();
-                    if m >= 4 && last_ele == (m^2) { self.seq.pop(); }
+                    let last_ele = *self.seq.back().unwrap();
+                    if m >= 4 && last_ele == (m^2) { self.seq.pop_back(); }
                     else if m<4 && last_ele < 4 {
                         m += last_ele;
                         let last_idx = self.seq.len() - 1;
                         util::change_value(&mut self.seq, last_idx, m);
-                        if m == 0 { self.seq.pop(); }
+                        if m == 0 { self.seq.pop_back(); }
                     }
                     else {
-                        self.seq.push(m);    
+                        self.seq.push_back(m);    
                     }
                 } else {
-                    self.seq.push(m);
+                    self.seq.push_back(m);
                 }
             }
         }
@@ -190,12 +190,21 @@ impl MLData {
         if self.mode >= 3
         {
             //do next move of prerecorded sequence
-            if self.seq.len() == 0 { 
+            if self.seq.is_empty() { 
                 self.mode = 0; 
             } else {
-                //let c = self.seq.shi
-
+                // var c=seq.shift();
+                let c = self.seq.pop_front().unwrap();
+                if self.seq.is_empty() { self.mode = 0; }
+                if c==4 || c==5 { 
+                    self.doleft(util::cvt_int(c-4)); 
+                } else if c==6 || c==7 {
+                    self.doright(util::cvt_int(c-6));
+                } else {
+                    self.domove( util::add(self.blank_y, c) );
+                }
             }
+            //display()
         }
     }
 
@@ -393,7 +402,7 @@ impl Default for MLData
     fn default() -> MLData
     {
         MLData { posit: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-            , blank_x: 0, blank_y: 0, seq: Vec::new(), mode: MODE_NORMAL }
+            , blank_x: 0, blank_y: 0, seq: VecDeque::new(), mode: MODE_NORMAL }
     }
 }
 

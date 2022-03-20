@@ -1,4 +1,4 @@
-use std::convert::{TryFrom, TryInto};
+use std::{convert::{TryFrom, TryInto}, collections::VecDeque};
 
 //convert signed int to uint asserting that it is possible
 pub fn cvt_int(v : isize) -> usize
@@ -27,7 +27,7 @@ pub fn compare(x : usize, y : isize) -> isize
     else { return 0; }
 }
 
-pub fn change_value(list : &mut Vec<isize>, idx : usize, value : isize)
+pub fn change_value(list : &mut VecDeque<isize>, idx : usize, value : isize)
 {
     list[idx] = value;
 }

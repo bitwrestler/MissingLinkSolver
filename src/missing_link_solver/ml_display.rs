@@ -81,7 +81,26 @@ pub const LINE_ENDING: &'static str = "\n";
         }
         return ret;
        }
+
+       pub fn set_value(&mut self, col_idx : usize, row_idx : usize, value : String)
+        {
+        self.cols[col_idx][row_idx] = MLDisplay::find_display_pos(value);
+        }
+
+        pub fn find_display_pos(value : String) -> usize
+        {
+            let mut idx : usize = 0;
+            for adisp in TILES
+            {
+                if value.eq(adisp) { return idx; }
+                idx+=1;
+            }
+            panic!("Can not find tile {}",value);
+        }
     }
+
+    
+    
 
     impl Default for MLDisplay
     {
@@ -92,5 +111,45 @@ pub const LINE_ENDING: &'static str = "\n";
                 cols: initdata
              };
              return d_struct;
+        }
+    }
+
+    impl From<String> for MLDisplay
+    {
+        fn from(item : String) -> Self
+        {
+            let mut disp = MLDisplay::default();
+            let mut bufPos : u8 = 0;
+            let mut colPos : usize = 0;
+            let mut rowPos : usize = 0;
+            let mut tmpBuf : [char;2] = ['\0','\0'];
+            for achar in item.chars()
+            {
+                if(achar == ';')
+                {
+                    bufPos = 0;
+                    
+                    //TODO replace with rotate to next routine
+                    colPos+=1;
+                    rowPos=0;
+                    continue;
+                } else {
+                    if bufPos == 1
+                    {
+                        //TODO all this should be sub to reuse at end
+                        tmpBuf[1] = achar;
+                        let this_tile_str : String = tmpBuf.iter().collect();
+                        let tile_idx = MLDisplay::find_display_pos(this_tile_str);
+                        disp.cols[colPos][rowPos] = tile_idx;
+                        bufPos = 0;
+                        //TODO rotate to next routine column/row
+                    } else {
+                        tmpBuf[0] = achar;
+                        bufPos = 1;
+                    }
+                }
+                //TODO pick last tmpBuf
+            }
+            return disp;
         }
     }

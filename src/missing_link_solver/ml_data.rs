@@ -18,6 +18,7 @@ pub struct MLData {
     pub mode: usize
 }
 
+
 impl MLData {
     
     pub fn doleft(&mut self, i : usize)
@@ -117,6 +118,97 @@ impl MLData {
                 }
             }
         }
+    }
+
+    
+
+    pub fn solve(&mut self)
+    {
+        if self.mode==0 || self.mode==1
+        {
+            self.mode=3;
+            self.seq.clear();
+
+            //no solution set up yet. Construct it!
+            //save pieces;
+            let mut back : MLData = MLData::default();
+            Self::copy_posit(self,&mut back);  //var back = new Array();
+                                            //for(var i=0;i<16;i++) back[i]=posit[i];
+                                            //back[16]=blnkx; back[17]=blnky;
+            //solve first column
+            if self.posit[0]!=0 || self.posit[4]!=4 || self.posit[8]!=4 || self.posit[12]!=8
+            {
+                self.solvetile(8, 0);
+                self.solvetile(4, 0);
+                self.solvetile(4, 0);
+                self.solvetile(0, 0);
+            }
+
+            //solve second column
+            if self.posit[1]!=1 || self.posit[5]!=5 || self.posit[9]!=5 || self.posit[13]!=9 {
+                self.solvetile(9,1);
+                self.solvetile(5,1);
+                self.solvetile(5,1);
+                self.solvetile(1,1);
+            }
+
+            //solve bottom tile of third column
+            self.push_single(util::negative_of(self.blank_y)); //blank to top
+            if self.blank_x==2 { self.push(&[1,4,-1,6]); } //blank to top right
+            let mut t= self.find(10);
+            if t==2 { self.push(&[4,1,6,-1,6,1,4,-1]); t+=4;}
+            while t==6 || t==10 { self.push(&[7,3,5,4,-3,6]); t+=4;}
+            while t==7 || t==11 { self.push(&[4,3,6,7,-3,5]); t+=4;}
+
+            //solve bottom of last column.
+            t=self.find(11);
+            if t==2 { self.push(&[4,1,6,-1,6,1,4,-1]); t+=4;}
+            while t==6 || t==10 { self.push(&[3,4,5,-3,6,7]); t+=4;}
+            while t==7 || t==11 { self.push(&[4,5,3,6,7,-3]); t+=4;}
+
+            //solve middle of last column.
+            t=self.find(7);
+            if t==6 { self.push(&[4,1,6,-1,6,1,4,-1]); t=7; }
+            if t==7 { self.push(&[3,5,-3, 6,1,4,-1,4,3,6,7,-3]); }
+            if t==10 {self.push(&[4,5,3,7,6,6,-3,4,1,4,-1, 6,3,4,5,-3,6,7]); t=2;}
+            if t==2  {self.push(&[3,4,5,-3,6, 1,6,-1,4, 3, 7,-3]); }
+
+            //solve top of last column.
+            t=self.find(3);
+            if t==10 { self.push(&[4,5,3,7,6,6,-3,4,1,4,-1, 6,3,4,5,-3,6,7]); t=2;}
+            if t==2 { self.push(&[1,6,-1,4,1,4,-1,6]); }
+            if t==6 { self.push(&[4,1,6,-1,6,1,4,-1]); }
+
+            //solve top of third column.
+            t=self.find(2);
+            if t==10 { self.push(&[4,5,3,7,6,6,-3,4,1,4,-1,6,3,4,5,-3,6,7]); }
+            if t==6 { self.push(&[4,5,3,7,6,-3,4,1,6,-1, 6,3,4,4,5,-3,6,7]); }
+
+            Self::copy_posit(&back, self);
+        }
+
+        if self.mode >= 3
+        {
+            //do next move of prerecorded sequence
+            if self.seq.len() == 0 { 
+                self.mode = 0; 
+            } else {
+                //let c = self.seq.shi
+
+            }
+        }
+    }
+
+    pub fn copy_posit(copyfrom : &MLData, copyto : &mut MLData)
+    {
+        let mut idx : usize = 0;
+        for i in copyfrom.posit
+        {
+            copyto.posit[idx] = i;
+            idx+=1;
+        }
+        copyto.blank_x = copyfrom.blank_x;
+        copyto.blank_y = copyfrom.blank_y;
     }
 
     pub fn find(&self, tl : usize) -> usize
@@ -295,5 +387,14 @@ impl MLData {
         }
     }
 } //end impl
+
+impl Default for MLData
+{
+    fn default() -> MLData
+    {
+        MLData { posit: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+            , blank_x: 0, blank_y: 0, seq: Vec::new(), mode: MODE_NORMAL }
+    }
+}
 
 mod util;

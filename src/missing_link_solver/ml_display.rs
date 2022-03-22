@@ -99,9 +99,6 @@ pub const LINE_ENDING: &'static str = "\n";
         }
     }
 
-    
-    
-
     impl Default for MLDisplay
     {
         fn default () -> MLDisplay
@@ -116,40 +113,59 @@ pub const LINE_ENDING: &'static str = "\n";
 
     impl From<String> for MLDisplay
     {
+        //TODO UT
         fn from(item : String) -> Self
         {
             let mut disp = MLDisplay::default();
-            let mut bufPos : u8 = 0;
-            let mut colPos : usize = 0;
-            let mut rowPos : usize = 0;
-            let mut tmpBuf : [char;2] = ['\0','\0'];
+            let mut buf_pos : u8 = 0;
+            let mut col_row = (0usize,0usize);
+
+            let mut tmp_buf : [char;2] = ['\0','\0'];
             for achar in item.chars()
             {
-                if(achar == ';')
+                if achar == ';'
                 {
-                    bufPos = 0;
-                    
-                    //TODO replace with rotate to next routine
-                    colPos+=1;
-                    rowPos=0;
+                    buf_pos = 0;
+                    col_row = display_util::rotate_next_display( col_row );
                     continue;
                 } else {
-                    if bufPos == 1
+                    if buf_pos == 1
                     {
-                        //TODO all this should be sub to reuse at end
-                        tmpBuf[1] = achar;
-                        let this_tile_str : String = tmpBuf.iter().collect();
-                        let tile_idx = MLDisplay::find_display_pos(this_tile_str);
-                        disp.cols[colPos][rowPos] = tile_idx;
-                        bufPos = 0;
-                        //TODO rotate to next routine column/row
+                        disp.cols[col_row.0][col_row.1] = display_util::complete_pair(&mut tmp_buf, achar, &mut buf_pos);
                     } else {
-                        tmpBuf[0] = achar;
-                        bufPos = 1;
+                        tmp_buf[0] = achar;
+                        buf_pos = 1;
                     }
                 }
-                //TODO pick last tmpBuf
             }
             return disp;
+        }
+    }
+
+    mod display_util
+    {
+        //TODO UT
+        pub fn complete_pair(buf : &mut [char], thischar : char,  next_pos : &mut u8) -> usize
+        {
+            buf[1] = thischar;
+            let this_tile_str : String = buf.iter().collect();
+            let tile_idx = super::MLDisplay::find_display_pos(this_tile_str);
+            *next_pos = 0;
+            return tile_idx;       
+        }
+
+        //TODO UT
+        pub fn rotate_next_display(pair : (usize,usize)) -> (usize,usize)
+        {
+            let mut new_col = pair.0;
+            let mut new_row = pair.1;
+            
+            if new_row == crate::missing_link_solver::ml_data::SIZE_COLUMN - 1
+            {
+                new_row = 0;
+                new_col +=1;
+            }
+
+            return (new_col,new_row);
         }
     }

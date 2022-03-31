@@ -1,3 +1,4 @@
+#[doc(inline)]
 use super::ml_data::{SIZE_COLUMN, SIZE_TOTAL,BLANK_IDX};
 
 //#[cfg(windows)]
@@ -5,7 +6,7 @@ use super::ml_data::{SIZE_COLUMN, SIZE_TOTAL,BLANK_IDX};
 //#[cfg(not(windows))]
 pub const LINE_ENDING: &'static str = "\n";
 
-    pub const TILES : &[&str] = &["Tr","Ty","Tg","Tw","Mr","My","Mg","Mw","Br","By","Bg","Bw","_"];
+    pub const TILES : &[&str] = &["Tr","Ty","Tg","Tw","Mr","My","Mg","Mw","Br","By","Bg","Bw","__"];
 
     pub struct MLDisplay
     {
@@ -43,7 +44,7 @@ pub const LINE_ENDING: &'static str = "\n";
                 }
             }
             s.push_str(LINE_ENDING);
-       }
+        } 
        return s;
        }
 
@@ -97,6 +98,40 @@ pub const LINE_ENDING: &'static str = "\n";
             }
             panic!("Can not find tile {}",value);
         }
+
+        pub fn rotate_next_display(pair : (usize,usize)) -> (usize,usize)
+        {
+            const SC : usize = crate::missing_link_solver::ml_data::SIZE_COLUMN;
+
+            let mut new_col = pair.0;
+            let mut new_row = pair.1;
+            
+            if new_col >= SC
+            {
+                panic!("Column exceeds limit");
+            }
+
+            if new_row >= SC
+            {
+                panic!("Row exceeds limit");
+            }
+
+            new_row+=1;
+
+            if new_row == SC
+            {
+                new_row = 0;
+                new_col +=1;
+            }
+
+            if new_col == SC
+            {
+                new_row = 0;
+                new_col = 0;
+            }
+
+            return (new_col,new_row);
+        }
     }
 
     impl Default for MLDisplay
@@ -113,7 +148,6 @@ pub const LINE_ENDING: &'static str = "\n";
 
     impl From<String> for MLDisplay
     {
-        //TODO UT
         fn from(item : String) -> Self
         {
             let mut disp = MLDisplay::default();
@@ -123,49 +157,22 @@ pub const LINE_ENDING: &'static str = "\n";
             let mut tmp_buf : [char;2] = ['\0','\0'];
             for achar in item.chars()
             {
-                if achar == ';'
-                {
-                    buf_pos = 0;
-                    col_row = display_util::rotate_next_display( col_row );
-                    continue;
-                } else {
+                if achar != ';'
+                {   
                     if buf_pos == 1
                     {
-                        disp.cols[col_row.0][col_row.1] = display_util::complete_pair(&mut tmp_buf, achar, &mut buf_pos);
+                        tmp_buf[1] = achar;
+                        let this_tile_str = tmp_buf.iter().collect();
+                        let tile_idx = MLDisplay::find_display_pos(this_tile_str);
+                        disp.cols[col_row.0][col_row.1] = tile_idx;
+                        buf_pos = 0;
+                        col_row = MLDisplay::rotate_next_display( col_row );
                     } else {
                         tmp_buf[0] = achar;
                         buf_pos = 1;
                     }
-                }
+                }                
             }
             return disp;
-        }
-    }
-
-    mod display_util
-    {
-        //TODO UT
-        pub fn complete_pair(buf : &mut [char], thischar : char,  next_pos : &mut u8) -> usize
-        {
-            buf[1] = thischar;
-            let this_tile_str : String = buf.iter().collect();
-            let tile_idx = super::MLDisplay::find_display_pos(this_tile_str);
-            *next_pos = 0;
-            return tile_idx;       
-        }
-
-        //TODO UT
-        pub fn rotate_next_display(pair : (usize,usize)) -> (usize,usize)
-        {
-            let mut new_col = pair.0;
-            let mut new_row = pair.1;
-            
-            if new_row == crate::missing_link_solver::ml_data::SIZE_COLUMN - 1
-            {
-                new_row = 0;
-                new_col +=1;
-            }
-
-            return (new_col,new_row);
         }
     }

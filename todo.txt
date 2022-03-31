@@ -1,5 +1,3 @@
-1. MLDisplay From<String> Trait (will help to build initial setup.... using ttile string column/row order)
-2. UT for #1
 3. MLData From<MLDisplay> Trait or conversion routine from display to data. This is for setting upt he board initially
 4. UT for #3
 5. use above to setup UT scenario for Solve()

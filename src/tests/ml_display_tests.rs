@@ -13,7 +13,7 @@ pub fn MLDisplay_dump_fmt()
     let disp = MLDisplay::new(&sample);
     let ret = disp.dump_fmt();
     let expected = 
-"Tr  Ty  Tg  _
+"Tr  Ty  Tg  __
 Mr  My  Mg  Tw
 Mr  My  Mg  Mw
 Br  By  Bg  Bw
@@ -30,7 +30,7 @@ pub fn MLDisplay_dump_value()
 
     let ret = disp.dump_str();
 
-    assert_eq!("TrMrMrBrTyMyMyByTgMgMgBg_TwMwBw",ret);
+    assert_eq!("TrMrMrBrTyMyMyByTgMgMgBg__TwMwBw",ret);
 }
 
 #[test]
@@ -59,4 +59,104 @@ pub fn MLDisplay_dumpcolraw_value()
     for i in 0..SIZE_COLUMN{
         assert_eq!(expected[i],ret[i])
    }
+}
+
+#[test]
+pub fn find_display_pos_found()
+{
+    let sample = String::from("Bw");
+    let ret = MLDisplay::find_display_pos(sample);
+    assert_eq!(11,ret);
+}
+
+#[test]
+#[should_panic]
+pub fn find_display_pos_notfound()
+{
+    let sample = String::from("JJ");
+    MLDisplay::find_display_pos(sample);
+}
+
+#[test]
+pub fn display_util_rotate_next_display_00_01()
+{
+    let col_row = (0usize,0usize);
+    let rotated = MLDisplay::rotate_next_display(col_row);
+    assert_eq!(0,rotated.0);
+    assert_eq!(1,rotated.1);
+}
+
+#[test]
+pub fn display_util_rotate_next_display_01_02()
+{
+    let col_row = (0usize,1usize);
+    let rotated = MLDisplay::rotate_next_display(col_row);
+    assert_eq!(0,rotated.0);
+    assert_eq!(2,rotated.1);
+}
+
+#[test]
+pub fn display_util_rotate_next_display_02_03()
+{
+    let col_row = (0usize,2usize);
+    let rotated = MLDisplay::rotate_next_display(col_row);
+    assert_eq!(0,rotated.0);
+    assert_eq!(3,rotated.1);
+}
+
+#[test]
+pub fn display_util_rotate_next_display_03_10()
+{
+    let col_row = (0usize,3usize);
+    let rotated = MLDisplay::rotate_next_display(col_row);
+    assert_eq!(1,rotated.0);
+    assert_eq!(0,rotated.1);
+}
+
+#[test]
+#[should_panic]
+pub fn display_util_rotate_next_display_40_panic()
+{
+    let col_row = (4usize,0usize);
+    MLDisplay::rotate_next_display(col_row);
+}
+
+#[test]
+#[should_panic]
+pub fn display_util_rotate_next_display_04_panic()
+{
+    let col_row = (0usize,4usize);
+    MLDisplay::rotate_next_display(col_row);
+}
+
+#[test]
+pub fn from_string_noseparators_expected()
+{
+    let sample = String::from("TwMwBw__TyMyMyByMgTrMrBgTgMgMrBr");
+    let disp = MLDisplay::from(sample);
+
+    let ret = disp.dump_fmt();
+    let expected = 
+"Tw  Ty  Mg  Tg
+Mw  My  Tr  Mg
+Bw  My  Mr  Mr
+__  By  Bg  Br
+";
+    assert_eq!(ret,expected);
+}
+
+#[test]
+pub fn from_string_separators_expected()
+{
+    let sample = String::from("TwMwBw__;TyMyMyBy;MgTrMrBg;TgMgMrBr");
+    let disp = MLDisplay::from(sample);
+
+    let ret = disp.dump_fmt();
+    let expected = 
+"Tw  Ty  Mg  Tg
+Mw  My  Tr  Mg
+Bw  My  Mr  Mr
+__  By  Bg  Br
+";
+    assert_eq!(ret,expected);
 }

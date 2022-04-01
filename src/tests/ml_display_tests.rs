@@ -23,6 +23,22 @@ Br  By  Bg  Bw
 }
 
 #[test]
+pub fn MLDisplay_into_MLData()
+{
+    let sample = initbrd();
+    let disp = MLDisplay::new(&sample);
+
+    let sample2 : ml_data::MLData = disp.into();
+
+    for i in 0..SIZE_TOTAL
+    {
+        assert_eq!(sample.posit[i],sample2.posit[i]);
+    }
+    assert_eq!(sample.blank_x,sample2.blank_x);
+    assert_eq!(sample.blank_y,sample2.blank_y);
+}
+
+#[test]
 pub fn MLDisplay_dump_value()
 {
     let sample = initbrd();

@@ -10,6 +10,7 @@ pub const LINE_ENDING: &'static str = "\n";
 
     pub struct MLDisplay
     {
+        //2-dimensional array columns/rows
         cols : [[usize;4];4]
     }
 
@@ -174,5 +175,27 @@ pub const LINE_ENDING: &'static str = "\n";
                 }                
             }
             return disp;
+        }
+    }
+
+    impl Into<super::ml_data::MLData> for MLDisplay
+    {
+        fn into(self) -> super::ml_data::MLData
+        {
+            let mut d_struct = super::ml_data::MLData::default();
+            let mut idx : usize = 0;
+            for i in 0..SIZE_COLUMN { //cols
+                    for j in 0..SIZE_COLUMN { //rows
+                       d_struct.posit[idx] = self.cols[j][i];
+                       
+                       if d_struct.posit[idx] == BLANK_IDX
+                       {
+                            d_struct.blank_y = i;
+                            d_struct.blank_x = j;
+                       }
+                       idx+=1;
+                    }
+               }
+            return d_struct;
         }
     }

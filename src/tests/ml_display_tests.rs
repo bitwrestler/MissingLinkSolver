@@ -5,7 +5,6 @@ use crate::missing_link_solver::*;
 use crate::missing_link_solver::ml_data::{SIZE_COLUMN, SIZE_TOTAL, BLANK_IDX};
 use crate::missing_link_solver::ml_display::{MLDisplay};
 
-
 #[test]
 pub fn MLDisplay_dump_fmt()
 {
@@ -184,10 +183,31 @@ pub fn is_valid_valid_returns_true()
     assert!(disp.is_valid());
 }
 
-
-#[test]
-#[should_panic]
-pub fn is_valid_invalid_blank_panics()
+mod invalid_display_tests
 {
-    let _ret = MLDisplay::from(String::from("__MwBw__;TyMyMyBy;MgTrMrBg;TgMgMrBr"));
+macro_rules! invalid_tests {
+    ($($name:ident: $value:expr,)*) => {
+    $(
+        #[test]
+        #[should_panic]
+        fn $name()
+        {
+            let _ret = super::MLDisplay::from(String::from($value));
+        }
+    )*
+    }
+}
+
+//TwMwBw__;TyMyMyBy;MgTrMrBg;TgMgMrBr
+
+//TODO a lot more tests could be given here
+invalid_tests! {
+    twoblanks: "__MwBw__;TyMyMyBy;MgTrMrBg;TgMgMrBr",
+    zeroblanks: "BwMwBwBw;TyMyMyBy;MgTrMrBg;TgMgMrBr",
+    twomiddlewhites: "MwMwBw__;TyMyMyBy;MgTrMrBg;TgMgMrBr",
+    twotopyellows: "TwMwBwTy;TyMyMyBy;MgTrMrBg;TgMgMrBr",
+    twotopwhites: "TwMwBwTw;TyMyMyBy;MgTrMrBg;TgMgMrBr",
+    twobottomwhites: "TwMwBwBw;TyMyMyBy;MgTrMrBg;TgMgMrBr",
+}
+
 }

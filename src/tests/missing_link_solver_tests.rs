@@ -24,3 +24,12 @@ pub fn test_solve_scenario_simple1movesolve()
     let disp = MLDisplay::new(&dataObj);
     assert_eq!(disp.dump_str(),"__TwMwBwTyMyMyByTgMgMgBgTrMrMrBr")
 }
+
+#[test]
+#[ignore = "endless loop"]
+pub fn solver_full_scenario()
+{
+    let disp = MLDisplay::from(String::from("TwMwBw__;TyMyMyBy;MgTrMrBg;TgMgMrBr"));
+    let iterations = solver(disp);
+    assert_eq!(50,iterations);
+}

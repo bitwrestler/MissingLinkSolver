@@ -54,6 +54,17 @@ pub fn MLData_doleft_topRow()
 }
 
 #[test]
+pub fn MLData_doleft_blank_in_first_col()
+{
+    let mut sample = crate::missing_link_solver::initbrd();
+    sample.posit[0] = 12;
+    sample.posit[3] = 0;
+    sample.blank_x = 0;
+    sample.doleft(0);
+    assert_eq!(sample.blank_x,3);
+}
+
+#[test]
 pub fn MLData_doleft_bottomRow()
 {
     let expected2 : [usize;SIZE_COLUMN] = [crate::missing_link_solver::ml_data::BLANK_IDX,3,7,8];

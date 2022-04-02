@@ -30,7 +30,7 @@ impl MLData {
         self.posit[c+1]=self.posit[c+2];
         self.posit[c+2]=self.posit[c+3];
         self.posit[c+3]=d;
-        if self.blank_y==i*3 { self.blank_x=(self.blank_x-1) & 3; }
+        if self.blank_y==i*3 { self.blank_x=util::cvt_int( util::subtract(self.blank_x,1) & 3); }
     }
 
     pub fn doright(&mut self, i : usize)

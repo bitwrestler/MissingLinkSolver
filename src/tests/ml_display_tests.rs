@@ -176,3 +176,18 @@ __  By  Bg  Br
 ";
     assert_eq!(ret,expected);
 }
+
+#[test]
+pub fn is_valid_valid_returns_true()
+{
+    let disp = MLDisplay::from(String::from("TwMwBw__;TyMyMyBy;MgTrMrBg;TgMgMrBr"));
+    assert!(disp.is_valid());
+}
+
+
+#[test]
+#[should_panic]
+pub fn is_valid_invalid_blank_panics()
+{
+    let _ret = MLDisplay::from(String::from("__MwBw__;TyMyMyBy;MgTrMrBg;TgMgMrBr"));
+}

@@ -1,12 +1,11 @@
 #[doc(inline)]
 use super::ml_data::{SIZE_COLUMN, SIZE_TOTAL,BLANK_IDX};
 
-//#[cfg(windows)]
-//pub const LINE_ENDING: &'static str = "\r\n";
-//#[cfg(not(windows))]
 pub const LINE_ENDING: &'static str = "\n";
 
+    pub const TILES_SIZE : usize = 13;
     pub const TILES : &[&str] = &["Tr","Ty","Tg","Tw","Mr","My","Mg","Mw","Br","By","Bg","Bw","__"];
+    pub const TILES_VALID_COUNTS : &[u8] = &[1,1,1,1,2,2,2,1,1,1,1,1,1];
 
     pub struct MLDisplay
     {
@@ -32,6 +31,37 @@ pub const LINE_ENDING: &'static str = "\n";
        pub fn display(&self)
        {
             print!("{}",self.dump_fmt());
+       }
+
+       fn increment_idx_value(input_array : &mut [u8], idx : usize)
+       {   
+           for aidx in 0..input_array.len()
+           {
+               if aidx == idx
+               {
+                   input_array[aidx] += 1;
+               }
+           }
+       }
+
+       pub fn is_valid(&self) -> bool
+       {
+            let mut counts : [u8;TILES_SIZE] = [0;TILES_SIZE];
+
+            for i in 0..SIZE_COLUMN{
+                for j in 0..SIZE_COLUMN {
+                    MLDisplay::increment_idx_value(&mut counts, self.cols[i][j]);   
+                }
+            }
+
+            for i in 0..TILES_SIZE
+            {
+                if counts[i] != TILES_VALID_COUNTS[i]
+                {
+                    return false;
+                }
+            }
+            return true;
        }
 
        pub fn dump_fmt(&self) -> String
@@ -173,6 +203,10 @@ pub const LINE_ENDING: &'static str = "\n";
                         buf_pos = 1;
                     }
                 }                
+            }
+            if ! disp.is_valid()
+            {
+                panic!("Format string is invalid");
             }
             return disp;
         }

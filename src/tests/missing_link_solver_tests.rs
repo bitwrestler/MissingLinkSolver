@@ -17,7 +17,7 @@ pub fn initbrd_expect_default()
 
 
 #[test]
-pub fn test_solve_scenario_simple1move()
+pub fn test_solve_scenario_simple1movesolve()
 {
     let mut dataObj : MLData = MLDisplay::into(MLDisplay::from(String::from("Tw__MwBw;TyMyMyBy;TgMgMgBg;TrMrMrBr")));
     dataObj.solve();

@@ -1,1 +1,4 @@
-5. use above to setup UT scenario for Solve()
+Now that simple 1 move solve seems to work
+1. looping solve to solve a whole thing with UT
+2. difference routine that can print the steps in wording and visually for each move
+3. command line front end that takes starting string and solves printing out step-by-step solution with wording and display

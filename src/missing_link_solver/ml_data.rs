@@ -187,6 +187,7 @@ impl MLData {
             if t==10 { self.push(&[4,5,3,7,6,6,-3,4,1,4,-1,6,3,4,5,-3,6,7]); }
             if t==6 { self.push(&[4,5,3,7,6,-3,4,1,6,-1, 6,3,4,4,5,-3,6,7]); }
 
+            //restore pieces;
             Self::copy_posit(&back, self);
             self.blank_x = back.blank_x;
             self.blank_y = back.blank_y;
@@ -199,7 +200,9 @@ impl MLData {
                 self.mode = 0; 
             } else {
                 // var c=seq.shift();
-                let c = self.seq.pop_front().unwrap();
+                let c = self.seq.pop_front().unwrap();   //var c=seq[0];
+                                                                //for(var i=1;i<seq.length;i++) seq[i-1]=seq[i];
+                                                                //seq.length--;
                 if self.seq.is_empty() { self.mode = 0; }
                 if c==4 || c==5 { 
                     self.doleft(util::cvt_int(c-4)); 

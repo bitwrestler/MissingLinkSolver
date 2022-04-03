@@ -4,7 +4,7 @@
 
 mod tests;
 
-pub const MAX_SOLVE_ITERATIONS : usize = 100000;
+pub const MAX_SOLVE_ITERATIONS : usize = 10000;
 
 pub mod missing_link_solver
 {

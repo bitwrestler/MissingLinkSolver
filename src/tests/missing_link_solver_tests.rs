@@ -33,3 +33,17 @@ pub fn solver_full_scenario()
     let iterations = solver(disp);
     assert_eq!(50,iterations);
 }
+
+mod rust_assumption_tests
+{
+    #[test]
+    pub fn for_range_start_gt_doesnotrun()
+    {
+        let mut run_check : bool = false;
+        for _aele in 4..3
+        {
+            run_check=true;
+        }
+        assert_eq!(false,run_check);
+    }
+}

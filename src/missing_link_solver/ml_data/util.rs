@@ -36,3 +36,14 @@ pub fn negative_of(val : usize) -> isize
 {
     return isize::try_from(val).ok().unwrap() * -1;
 }
+
+pub fn inclusive_reverse_range(end_val : usize) -> Vec<usize>
+{
+    let mut range: Vec<usize> = Vec::new();
+    for aval in 0..=end_val
+    {
+        range.push(aval);
+    }
+    range.reverse();
+    return  range;
+}

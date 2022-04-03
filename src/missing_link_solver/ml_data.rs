@@ -236,22 +236,34 @@ impl MLData {
         //gap to top. Assumes gap is not below partially solved column
         self.push_single(util::negative_of(self.blank_y));
 
+        //find tile
         let mut tx_idx : usize = 0;
+        let mut ty_idx : usize = 0;
+
         for ty in 0..SIZE_COLUMN
         {
-            for tx in cl+1..SIZE_COLUMN
+            let tx_start = cl+1;
+            tx_idx = tx_start;
+            for tx in tx_start..SIZE_COLUMN
             {
                 tx_idx = tx;
                 if self.posit[ty*4+tx]==tl { break; }
             }
             if tx_idx < 4 {break;}
         }
-        let mut ty_idx : usize = 0;
+          
+        /* how is tx_idx ever going to be >= 4? 
+        I think this entire condition is impossible.
+        See scoping on original
+        */
         if tx_idx>=4
         {
-            for tx in (0..=cl).rev()
+            tx_idx = cl;
+            for tx in util::inclusive_reverse_range(cl) //(0..=cl).rev()
             {
-                for ty in (0..=3).rev()
+                tx_idx = tx;
+                ty_idx = 3;
+                for ty in util::inclusive_reverse_range(3) //(0..=3).rev()
                 {
                     ty_idx = ty;
                     if self.posit[ty*4+tx]==tl {break;}
@@ -407,4 +419,4 @@ impl Default for MLData
     }
 }
 
-mod util;
+pub mod util;

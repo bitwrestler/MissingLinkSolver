@@ -178,3 +178,17 @@ fn assert_column(sample : &MLData, expected : [usize;SIZE_COLUMN], idx : usize)
         assert_eq!(expected[i],ret[i])
     }
 }
+
+mod util_tests
+{
+    #[cfg(test)]
+    use crate::missing_link_solver::ml_data::util;
+    
+    #[test]
+    pub fn reverse_range_expected_values()
+    {
+        let ret = util::inclusive_reverse_range(3);
+
+        assert!(ret == [3,2,1,0]);
+    }
+}

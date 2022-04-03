@@ -297,7 +297,7 @@ impl MLData {
                 while a>0 {self.push_single(4); a -= 1;}
                 while a<0 {self.push_single(6); a +=1;}
                 //tile down
-                self.push(&[-1]);
+                self.push_single(-1);
                 //Move top column back
                 tx_idx=self.blank_x;
                 //ty_idx += 1; //this value is not used again on this path
@@ -362,7 +362,7 @@ impl MLData {
             }
 
             //Move tile into top of column cl. Tile is in second row now, gap somewhere in top row.
-            if cl!=0 && self.blank_y != cl
+            if cl!=0 && self.blank_x != cl
             {
                 //move gap at spot of tile now at top of column cl.
                 //gap to second row

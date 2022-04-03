@@ -135,6 +135,9 @@ impl MLData {
             Self::copy_posit(self,&mut back);  //var back = new Array();
                                             //for(var i=0;i<16;i++) back[i]=posit[i];
                                             //back[16]=blnkx; back[17]=blnky;
+            back.blank_x = self.blank_x;
+            back.blank_y = self.blank_y;
+
             //solve first column
             if self.posit[0]!=0 || self.posit[4]!=4 || self.posit[8]!=4 || self.posit[12]!=8
             {
@@ -185,6 +188,8 @@ impl MLData {
             if t==6 { self.push(&[4,5,3,7,6,-3,4,1,6,-1, 6,3,4,4,5,-3,6,7]); }
 
             Self::copy_posit(&back, self);
+            self.blank_x = back.blank_x;
+            self.blank_y = back.blank_y;
         }
 
         if self.mode >= 3

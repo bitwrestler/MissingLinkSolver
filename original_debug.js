@@ -73,13 +73,15 @@ document.writeln("<\/td><\/tr><\/table>");
 
 function display()
 {
+    var tmpStr = "";
     var c=0;
     for (var i=0;i<4;i++){
         for (var j=0;j<4;j++){
-            console.log(posit[c] + ",");
+            tmpStr = tmpStr + posit[c] + ",";
             c++;
         }
-        console.log(";");
+        console.log(tmpStr + ";");
+        tmpStr = "";
     }
     console.log("\n");
 

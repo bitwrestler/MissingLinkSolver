@@ -79,7 +79,7 @@ function display()
             console.log(posit[c] + ",");
             c++;
         }
-        console.log(posit[c] + ";");
+        console.log(";");
     }
     console.log("\n");
 
@@ -91,10 +91,13 @@ function display()
 
 function display_seq()
 {
-    for(ele in seq)
-    {
-        console.log(ele + ",");
-    }
+    console.log("seq debug:");
+    seq.forEach
+        (function (item,index)
+        {
+            console.log(index + ": " + item);
+        }
+    );
 }
 
 /*

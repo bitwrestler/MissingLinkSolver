@@ -34,6 +34,23 @@ pub fn solver_full_scenario()
     assert_eq!(50,iterations);
 }
 
+#[test]
+pub fn solve_endlessloop_debug()
+{
+    println!("starting");
+    let mut data : MLData = MLDisplay::from(String::from("TwMwBw__;TyMyMyBy;MgTrMrBg;TgMgMrBr")).into();
+    data.solve();
+    
+    let mut idx = 0;
+    println!("seq debug:");
+    loop{
+        let aele = data.seq.pop_front();
+        if aele == None { break; }
+        println!("{}: {}", idx, aele.unwrap());
+        idx +=1;
+    }
+}
+
 mod rust_assumption_tests
 {
     #[test]

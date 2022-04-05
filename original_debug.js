@@ -411,6 +411,7 @@ function solvetile(tl,cl){
         }
         if(tx<4)break;
     }
+    console.log("solvetile01 -> tx:" + tx + " ty:" + ty + " tl:" + tl + " cl:" + cl );
     if(tx>=4){
         for(var tx=cl;tx>=0;tx--){
             for(var ty=3;ty>=0;ty--){
@@ -419,6 +420,8 @@ function solvetile(tl,cl){
             if(ty>=0)break;
         }
     }
+
+    console.log("solvetile02 -> tx:" + tx + " ty:" + ty + " tl:" + tl + " cl:" + cl );
 
     if(ty==0 && cl==0){
         while(tx>0){

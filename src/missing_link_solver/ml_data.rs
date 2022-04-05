@@ -250,6 +250,7 @@ impl MLData {
 
         for ty in 0..SIZE_COLUMN
         {
+            ty_idx = ty;
             let tx_start = cl+1;
             tx_idx = tx_start;
             for tx in tx_start..SIZE_COLUMN
@@ -257,7 +258,8 @@ impl MLData {
                 tx_idx = tx;
                 if self.posit[ty*4+tx]==tl { break; }
             }
-            if tx_idx < 4 {break;}
+            //if tx_idx < 4 {break;}
+            if tx_idx < SIZE_COLUMN-1 {break;}
         }
           
         /* how is tx_idx ever going to be >= 4? 

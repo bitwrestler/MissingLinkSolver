@@ -37,7 +37,7 @@ pub fn solver_full_scenario()
 #[test]
 pub fn solve_endlessloop_debug()
 {
-    println!("starting");
+    println!("starting rust version:");
     let mut data : MLData = MLDisplay::from(String::from("TwMwBw__;TyMyMyBy;MgTrMrBg;TgMgMrBr")).into();
     data.solve();
     

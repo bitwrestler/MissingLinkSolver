@@ -274,13 +274,13 @@ impl MLData {
             {
                 tx_idx = tx;
                 ty_idx = 3;
-                for ty in util::inclusive_reverse_range(SIZE_COLUMN - 1) //(0..=3).rev()
+                for ty in util::inclusive_reverse_range(ty_idx) //(0..=3).rev(
                 {
                     ty_idx = ty;
                     if self.posit[ty*4+tx]==tl {break;}
                 }
-                if ty_idx >= 0  //this condition is really suspect... see orignal code... this expression is always true
-                //if ty_idx > 0
+                //if ty_idx >= 0  //this condition is really suspect... see orignal code... this expression is always true
+                if ty_idx > 0
                 {
                     break;
                 } 

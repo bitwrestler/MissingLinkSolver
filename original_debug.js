@@ -320,6 +320,8 @@ function solve(){
             solvetile(1,1);
         }
 
+        console.log("solve01 -> blnkx:" + blnkx + " blnky:" + blnky + " seqcount:" + (seq.length - 1) + " lastseq:" + seq[seq.length-1]);
+
         //solve bottom tile of third column
         push(-blnky) //blank to top
         if(blnkx==2) push(1,4,-1,6); //blank to top right
@@ -407,7 +409,8 @@ function solvetile(tl,cl){
     //find tile
     for(var ty=0;ty<4;ty++){
         for(var tx=cl+1;tx<4;tx++){
-            if(posit[ty*4+tx]==tl) break;
+            var thisidx = ty*4+tx;
+            if(posit[thisidx]==tl) break;
         }
         if(tx<4)break;
     }
@@ -415,7 +418,8 @@ function solvetile(tl,cl){
     if(tx>=4){
         for(var tx=cl;tx>=0;tx--){
             for(var ty=3;ty>=0;ty--){
-                if(posit[ty*4+tx]==tl) break;
+                var thisidx = ty*4+tx;
+                if(posit[thisidx]==tl) break;
             }
             if(ty>=0)break;
         }
@@ -428,25 +432,34 @@ function solvetile(tl,cl){
             tx--;
             push(4);
         }
+        console.log("solvetile03 -> tx:" + tx + " ty:" + ty + " tl:" + tl + " cl:" + cl  + " blnkx:" + blnkx + " blnky:" + blnky + " seqcount:" + (seq.length - 1) + " lastseq:" + seq[seq.length-1]);
     }else {
+        console.log("solvetile04 -> tx:" + tx + " ty:" + ty + " tl:" + tl + " cl:" + cl  + " blnkx:" + blnkx + " blnky:" + blnky + " seqcount:" + (seq.length - 1) + " lastseq:" + seq[seq.length-1]);
         if(ty==0){
             //Move tile down to second row
             if(cl==blnkx) push(6,1,4);
             else push(1); //gap to second row
+            console.log("solvetile05 -> tx:" + tx + " ty:" + ty + " tl:" + tl + " cl:" + cl  + " blnkx:" + blnkx + " blnky:" + blnky + " seqcount:" + (seq.length - 1) + " lastseq:" + seq[seq.length-1]);
             //move tile above gap
             var a=tx-blnkx; var b=a;
             while(a>0){push(4); a--;}
+            console.log("solvetile06 -> tx:" + tx + " ty:" + ty + " tl:" + tl + " cl:" + cl  + " blnkx:" + blnkx + " blnky:" + blnky + " seqcount:" + (seq.length - 1) + " lastseq:" + seq[seq.length-1]);
             while(a<0){push(6); a++;}
+            console.log("solvetile07 -> tx:" + tx + " ty:" + ty + " tl:" + tl + " cl:" + cl  + " blnkx:" + blnkx + " blnky:" + blnky + " seqcount:" + (seq.length - 1) + " lastseq:" + seq[seq.length-1]);
             //tile down
             push(-1);
             //Move top column back
             tx=blnkx;ty++;
             while(b>0){push(6); b--;}
+            console.log("solvetile08 -> tx:" + tx + " ty:" + ty + " tl:" + tl + " cl:" + cl  + " blnkx:" + blnkx + " blnky:" + blnky + " seqcount:" + (seq.length - 1) + " lastseq:" + seq[seq.length-1]);
             while(b<0){push(4); b++;}
+            console.log("solvetile09 -> tx:" + tx + " ty:" + ty + " tl:" + tl + " cl:" + cl  + " blnkx:" + blnkx + " blnky:" + blnky + " seqcount:" + (seq.length - 1) + " lastseq:" + seq[seq.length-1]);
         }else{
+            console.log("solvetile10 -> tx:" + tx + " ty:" + ty + " tl:" + tl + " cl:" + cl  + " blnkx:" + blnkx + " blnky:" + blnky + " seqcount:" + (seq.length - 1) + " lastseq:" + seq[seq.length-1]);
             //Move tile up to second row
             //Special case when lies at bottom of partially solved column
             if(ty==3 && tx==cl && tl!=8 && tl!=9){
+                console.log("solvetile11 -> tx:" + tx + " ty:" + ty + " tl:" + tl + " cl:" + cl  + " blnkx:" + blnkx + " blnky:" + blnky + " seqcount:" + (seq.length - 1) + " lastseq:" + seq[seq.length-1]);
                 if(cl==0) { push(7); tx++;}
                 else{
                     if(blnkx==cl) { push(6,1,4); }

@@ -38,7 +38,11 @@ pub fn solver_full_scenario()
 pub fn solve_endlessloop_debug()
 {
     println!("starting rust version:");
-    let mut data : MLData = MLDisplay::from(String::from("TwMwBw__;TyMyMyBy;MgTrMrBg;TgMgMrBr")).into();
+    let mut data = MLData::default(); //MLDisplay::from(String::from("TwMwBw__;TyMyMyBy;MgTrMrBg;TgMgMrBr")).into();
+    data.blank_x = 0;
+    data.blank_y = 1;
+    data.posit = [3,1,2,0,12,5,6,4,7,5,6,4,11,9,10,8];
+
     data.solve();
     
     let mut idx = 0;

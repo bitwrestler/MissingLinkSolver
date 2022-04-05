@@ -256,7 +256,8 @@ impl MLData {
             for tx in tx_start..SIZE_COLUMN
             {
                 tx_idx = tx;
-                if self.posit[ty*4+tx]==tl { break; }
+                let thisidx = ty*4+tx;
+                if self.posit[thisidx]==tl { break; }
             }
             //if tx_idx < 4 {break;}
             if tx_idx < SIZE_COLUMN-1 {break;}
@@ -280,7 +281,8 @@ impl MLData {
                 for ty in util::inclusive_reverse_range(ty_idx) //(0..=3).rev(
                 {
                     ty_idx = ty;
-                    if self.posit[ty*4+tx]==tl {break;}
+                    let thisidx = ty*4+tx;
+                    if self.posit[thisidx]==tl {break;}
                 }
                 //if ty_idx >= 0  //this condition is really suspect... see orignal code... this expression is always true
                 if ty_idx > 0

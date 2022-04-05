@@ -266,8 +266,11 @@ impl MLData {
         I think this entire condition is impossible.
         See scoping on original
         */
+
+        //TODO this second for loop can't be running
         if tx_idx>=4
         //if tx_idx>=SIZE_COLUMN-1
+        //if tx_idx==3
         {
             tx_idx = cl;
             for tx in util::inclusive_reverse_range(cl) //(0..=cl).rev()

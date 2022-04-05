@@ -1,5 +1,8 @@
 Now that simple 1 move solve seems to work
 1. full solution is an endless loop
+    A. in sync up to element 56 in seq
+
+
 
 
 1. looping solve to solve a whole thing with UT

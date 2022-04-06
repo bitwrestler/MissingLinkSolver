@@ -410,18 +410,28 @@ function solvetile(tl,cl){
     for(var ty=0;ty<4;ty++){
         for(var tx=cl+1;tx<4;tx++){
             var thisidx = ty*4+tx;
-            if(posit[thisidx]==tl) break;
+            if(posit[thisidx]==tl)
+            {
+                break;
+            }
         }
-        if(tx<4)break;
+        if(tx<4){
+            break;
+        }
     }
     console.log("solvetile01 -> tx:" + tx + " ty:" + ty + " tl:" + tl + " cl:" + cl );
     if(tx>=4){
         for(var tx=cl;tx>=0;tx--){
             for(var ty=3;ty>=0;ty--){
                 var thisidx = ty*4+tx;
-                if(posit[thisidx]==tl) break;
+                if(posit[thisidx]==tl) 
+                {
+                    break;
+                }
             }
-            if(ty>=0)break;
+            if(ty>=0){
+                break;
+            }
         }
     }
 

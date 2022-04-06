@@ -10,12 +10,24 @@ pub const SIZE_COLUMN : usize = 4;
 
 pub const BLANK_IDX : usize = 12;
 
+#[derive(PartialEq, Eq, Debug)]
+pub enum MoveType{
+    StartingPosition,
+    TopMoveLeft,
+    TopMoveRight,
+    BottomMoveLeft,
+    BottomMoveRight,
+    MoveUp,
+    MoveDown
+}
+
 pub struct MLData {
     pub posit: [usize; 16],
     pub blank_x: usize,
     pub blank_y: usize,
     pub seq : VecDeque<isize>,
-    pub mode: usize
+    pub mode: usize,
+    pub last_move : MoveType
 }
 
 
@@ -429,7 +441,7 @@ impl Default for MLData
     {
         //1-dimensional array rows/columns
         MLData { posit: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-            , blank_x: 3, blank_y: 0, seq: VecDeque::new(), mode: MODE_NORMAL }
+            , blank_x: 3, blank_y: 0, seq: VecDeque::new(), mode: MODE_NORMAL, last_move: MoveType::StartingPosition }
     }
 }
 

@@ -22,7 +22,8 @@ pub fn initbrd() -> self::ml_data::MLData {
         blank_x: 3,
         blank_y: 0,
         seq: VecDeque::new(),
-        mode: ml_data::MODE_NORMAL
+        mode: ml_data::MODE_NORMAL,
+        last_move: ml_data::MoveType::StartingPosition
     }
 }
 

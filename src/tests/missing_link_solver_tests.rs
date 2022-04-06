@@ -4,6 +4,7 @@
 use crate::missing_link_solver::*;
 use crate::missing_link_solver::ml_display::MLDisplay;
 use crate::missing_link_solver::ml_data::MLData;
+use crate::missing_link_solver::ml_data::MoveType;
 
 #[test]
 pub fn initbrd_expect_default()
@@ -12,6 +13,7 @@ pub fn initbrd_expect_default()
     assert_eq!(3,sample.blank_x);
     assert_eq!(0,sample.blank_y);
     assert_eq!(ml_data::MODE_NORMAL,sample.mode);
+    assert_eq!(MoveType::StartingPosition, sample.last_move);
     assert!(sample.solved());
 }
 

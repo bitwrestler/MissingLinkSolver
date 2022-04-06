@@ -10,15 +10,16 @@ pub const SIZE_COLUMN : usize = 4;
 
 pub const BLANK_IDX : usize = 12;
 
-#[derive(PartialEq, Eq, Debug)]
+#[derive(PartialEq, Eq, Debug, Copy, Clone)]
+#[repr(u8)]
 pub enum MoveType{
-    StartingPosition,
-    TopMoveLeft,
-    TopMoveRight,
-    BottomMoveLeft,
-    BottomMoveRight,
-    MoveUp,
-    MoveDown
+    StartingPosition=0,
+    TopMoveLeft=1,
+    TopMoveRight=2,
+    BottomMoveLeft=4,
+    BottomMoveRight=8,
+    MoveUp=16,
+    MoveDown=32
 }
 
 pub struct MLData {
@@ -43,6 +44,7 @@ impl MLData {
         self.posit[c+2]=self.posit[c+3];
         self.posit[c+3]=d;
         if self.blank_y==i*3 { self.blank_x=util::cvt_int( util::subtract(self.blank_x,1) & 3); }
+        self.last_move = if i == 0 { MoveType::TopMoveLeft } else { MoveType::BottomMoveLeft };
     }
 
     pub fn doright(&mut self, i : usize)
@@ -55,6 +57,7 @@ impl MLData {
         self.posit[c+1]=self.posit[c];
         self.posit[c]=d;
         if self.blank_y==i*3 {self.blank_x = (self.blank_x+1) & 3; }
+        self.last_move = if i == 0 { MoveType::TopMoveRight } else { MoveType::BottomMoveRight }
     }
 
     pub fn domove(&mut self,y : isize)
@@ -62,17 +65,21 @@ impl MLData {
         //try up/down move
         let mut c : usize = self.blank_y * 4 + self.blank_x;
         
+        //move up
         while util::compare(self.blank_y, y) == -1  //self.blank_y < y
         {
             self.posit[c] = self.posit[c + 4];
             c+=4;
             self.blank_y+=1;
+            self.last_move = MoveType::MoveUp;
         }
+        //move down
         while  util::compare(self.blank_y, y) == 1  //self.blank_y > y
         {
             self.posit[c]=self.posit[c-4];
             c-=4;
             self.blank_y-=1;
+            self.last_move = MoveType::MoveDown;
         }
         self.posit[c] = 12;
     }

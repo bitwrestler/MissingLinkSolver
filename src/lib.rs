@@ -10,7 +10,7 @@ pub mod missing_link_solver
 {
     use std::collections::VecDeque;
 
-    use crate::MAX_SOLVE_ITERATIONS;
+    use crate::{MAX_SOLVE_ITERATIONS, missing_link_solver::ml_data::MoveType};
 
     pub mod ml_data;
     pub mod ml_display;
@@ -51,8 +51,23 @@ fn display_current(data : &ml_data::MLData, iteration : usize)
 {
     let disp = ml_display::MLDisplay::new(&data);
     println!("Iteration: {}",iteration);
+    println!("{}",display_current_wording(data.last_move));
     disp.display();
     println!("");
+}
+
+fn display_current_wording(move_val: MoveType) -> String
+{
+    match move_val
+    {
+        MoveType::StartingPosition => String::from("Starting Position"),
+        MoveType::TopMoveLeft => String::from("Rotate Top to the Left"),
+        MoveType::TopMoveRight => String::from("Rotate Top to the Right"),
+        MoveType::BottomMoveLeft => String::from("Rotate Bottom to the Left"),
+        MoveType::BottomMoveRight => String::from("Rotate Bottom to the Right"),
+        MoveType::MoveUp => String::from("Move square Up"),
+        MoveType::MoveDown => String::from("Move square Down")
+    }
 }
 
 }

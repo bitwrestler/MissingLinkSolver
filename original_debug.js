@@ -462,34 +462,45 @@ function solvetile(tl,cl){
                 console.log("solvetile11 -> tx:" + tx + " ty:" + ty + " tl:" + tl + " cl:" + cl  + " blnkx:" + blnkx + " blnky:" + blnky + " seqcount:" + (seq.length - 1) + " lastseq:" + seq[seq.length-1]);
                 if(cl==0) { push(7); tx++;}
                 else{
-                    if(blnkx==cl) { push(6,1,4); }
+                    if(blnkx==cl) { 
+                        push(6,1,4); 
+                    }
+                    console.log("solvetile12 -> tx:" + tx + " ty:" + ty + " tl:" + tl + " cl:" + cl  + " blnkx:" + blnkx + " blnky:" + blnky + " seqcount:" + (seq.length - 1) + " lastseq:" + seq[seq.length-1]);
                     //tile to column with blank
                     var a=blnkx-cl; while(a>0){push(7); a--;}
+                    console.log("solvetile13 -> tx:" + tx + " ty:" + ty + " tl:" + tl + " cl:" + cl  + " blnkx:" + blnkx + " blnky:" + blnky + " seqcount:" + (seq.length - 1) + " lastseq:" + seq[seq.length-1]);
                     tx=blnkx;
                     //Move column upwards
                     push(3-blnky);
+                    console.log("solvetile14 -> tx:" + tx + " ty:" + ty + " tl:" + tl + " cl:" + cl  + " blnkx:" + blnkx + " blnky:" + blnky + " seqcount:" + (seq.length - 1) + " lastseq:" + seq[seq.length-1]);
                     ty--;
                     //move some unsolved column down, so gap at top again
                     if(blnkx-cl>1) push(5,-3);
                     else push(7,-3);
+                    console.log("solvetile15 -> tx:" + tx + " ty:" + ty + " tl:" + tl + " cl:" + cl  + " blnkx:" + blnkx + " blnky:" + blnky + " seqcount:" + (seq.length - 1) + " lastseq:" + seq[seq.length-1]);
                     //move bottom row back again
                     var a=blnkx-cl; while(a>0){push(5); a--;}
                 }
             }
+            console.log("solvetile16 -> tx:" + tx + " ty:" + ty + " tl:" + tl + " cl:" + cl  + " blnkx:" + blnkx + " blnky:" + blnky + " seqcount:" + (seq.length - 1) + " lastseq:" + seq[seq.length-1]);
             while(ty>1){
                 //move blank in top row over to column with the tile
                 var a=tx-blnkx; var b=a;
+                console.log("solvetile20 -> tx:" + tx + " ty:" + ty + " tl:" + tl + " cl:" + cl  + " blnkx:" + blnkx + " blnky:" + blnky + " seqcount:" + (seq.length - 1) + " lastseq:" + seq[seq.length-1]);
                 while(a>0){push(6); a--;}
                 while(a<0){push(4); a++;}
+                console.log("solvetile21 -> tx:" + tx + " ty:" + ty + " tl:" + tl + " cl:" + cl  + " blnkx:" + blnkx + " blnky:" + blnky + " seqcount:" + (seq.length - 1) + " lastseq:" + seq[seq.length-1]);
                 //move column with tile up
                 push(3);
                 ty--;
+                console.log("solvetile22 -> tx:" + tx + " ty:" + ty + " tl:" + tl + " cl:" + cl  + " blnkx:" + blnkx + " blnky:" + blnky + " seqcount:" + (seq.length - 1) + " lastseq:" + seq[seq.length-1]);
                 //restore top row into position
                 if(cl){
                     while(b>0){push(4); b--;}
                     while(b<0){push(6); b++;}
                 }
                 //Move adjacent column down
+                console.log("solvetile23 -> tx:" + tx + " ty:" + ty + " tl:" + tl + " cl:" + cl  + " blnkx:" + blnkx + " blnky:" + blnky + " seqcount:" + (seq.length - 1) + " lastseq:" + seq[seq.length-1]);
                 if(tx==3){
                     push(5,-3);
                     if(cl || tl==0) push(7);
@@ -501,7 +512,7 @@ function solvetile(tl,cl){
         }
 
         //Move tile into top of column cl. Tile is in second row now, gap somewhere in top row.
-
+        console.log("solvetile24 -> tx:" + tx + " ty:" + ty + " tl:" + tl + " cl:" + cl  + " blnkx:" + blnkx + " blnky:" + blnky + " seqcount:" + (seq.length - 1) + " lastseq:" + seq[seq.length-1]);
         if(cl && blnkx!=cl){
             //move gap at spot of tile now at top of column cl.
              //gap to second row
@@ -513,6 +524,7 @@ function solvetile(tl,cl){
             //pull down piece at top of column cl
             push(-1);
         }
+        console.log("solvetile25 -> tx:" + tx + " ty:" + ty + " tl:" + tl + " cl:" + cl  + " blnkx:" + blnkx + " blnky:" + blnky + " seqcount:" + (seq.length - 1) + " lastseq:" + seq[seq.length-1]);
         //move top row so that the blank lies above the tile
         while(blnkx<tx) push(6);
         while(blnkx>tx) push(4);
@@ -525,6 +537,7 @@ function solvetile(tl,cl){
     }
 
     //move down column if necessary
+    console.log("solvetile26 -> tx:" + tx + " ty:" + ty + " tl:" + tl + " cl:" + cl  + " blnkx:" + blnkx + " blnky:" + blnky + " seqcount:" + (seq.length - 1) + " lastseq:" + seq[seq.length-1]);
     if(tl>1){
         push(2); //gap to third row
         if(cl){  //move bottom row along to bring column cl tile below gap

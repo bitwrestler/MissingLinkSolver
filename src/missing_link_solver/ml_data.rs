@@ -331,7 +331,9 @@ impl MLData {
                         self.push_single(7);
                         tx_idx +=1;
                     } else {
-                        if self.blank_x == cl { self.push(&[6,1,4]); }
+                        if self.blank_x == cl { 
+                            self.push(&[6,1,4]); 
+                        }
                         //tile to column with blank
                         let mut a = util::subtract(self.blank_x, cl);
                         while a>0 { self.push_single(7); a -=1; }

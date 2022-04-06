@@ -26,15 +26,15 @@ pub fn test_solve_scenario_simple1movesolve()
 }
 
 #[test]
-#[ignore = "endless loop"]
 pub fn solver_full_scenario()
 {
     let disp = MLDisplay::from(String::from("TwMwBw__;TyMyMyBy;MgTrMrBg;TgMgMrBr"));
     let iterations = solver(disp);
-    assert_eq!(50,iterations);
+    assert_eq!(375,iterations);
 }
 
 #[test]
+#[ignore = "debugging test"]
 pub fn solve_endlessloop_debug()
 {
     println!("starting rust version:");

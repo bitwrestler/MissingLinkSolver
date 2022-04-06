@@ -44,6 +44,7 @@ pub fn solver(initial_setup : ml_display::MLDisplay) -> usize
         display_current(&data,loop_count);
         if data.solved() {break;}
     }
+    display_final();
     return loop_count;
 }
 
@@ -54,6 +55,11 @@ fn display_current(data : &ml_data::MLData, iteration : usize)
     println!("{}",display_current_wording(data.last_move));
     disp.display();
     println!("");
+}
+
+fn display_final()
+{
+    println!("Finished!");
 }
 
 fn display_current_wording(move_val: MoveType) -> String

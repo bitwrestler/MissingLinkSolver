@@ -2,3 +2,11 @@
 name = "missing_link_solver"
 version = "0.0.1"
 authors = [ "Eric Spencer from Javascript code from jaapsch@yahoo.com" ]
+
+[lib]
+name = "missing_link_solver"
+path = "src/lib.rs"
+
+[[bin]]
+name = "missing_link_solver_cmd"
+path = "src/bin.rs"

@@ -20,7 +20,10 @@ fn main()
 
 fn _usage()
 {
-    eprintln!("Usage: missing_link_solver_cmd.exe [starting pattern]")
+    eprintln!("Missing Link Solver 1.0");
+    eprintln!("Usage: missing_link_solver_cmd.exe [starting pattern]");
+    eprintln!();
+    eprintln!("Example: missing_link_solver_cmd.exe \"Tw__MwBw;TyMyMyBy;TgMgMgBg;TrMrMrBr\" ");
 }
 
 fn usage(message : String)

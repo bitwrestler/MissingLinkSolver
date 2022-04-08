@@ -31,9 +31,9 @@
 
 <H3>Output:</H3>
 The executable will give stpe-by step instructions on the solution in the form of:<br>
-1. Iteration #
-2. Instructional wording
-3. Resulting columns and rows diagram
+  1. Iteration #<br>
+  2. Instructional wording<br>
+  3. Resulting columns and rows diagram<br>
 
 <pre>
 Iteration: 0

@@ -2,7 +2,7 @@
 
 ![Missing Link Puzzle](/pix.png "Missing Link Puzzle")
 
-<p>This repository is a Rust port of Javascript code from https://www.jaapsch.net/puzzles/missing.htm. I did not originate this algorithm, but simply ported it to Rust and modified it somewhat for command line execution and display.</p>
+<p>This repository is a Rust port of Javascript code from https://www.jaapsch.net/puzzles/missing.htm. I did not originate this algorithm, but simply ported it to Rust and modified it somewhat for command line execution and display. This little project was mostly done to learn Rust a bit better. Provided here as a service to the community.</p>
 
 <code>Usage: missing_link_solver_cmd [starting pattern]</code>
 

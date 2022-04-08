@@ -56,8 +56,17 @@ Tg  __  Ty  Mg
 Tw  My  Tr  Mg
 Mw  My  Mr  Mr
 Bw  By  Bg  Br
-</pre>
 
   .....
+
+Iteration: 375
+Rotate Top to the Right
+Tr  Ty  Tg  __
+Mr  My  Mg  Tw
+Mr  My  Mg  Mw
+Br  By  Bg  Bw
+
+Finished!
+</pre>
 
 When the wording says "Move square Up or Down", that could mean moving in mulitple steps.

@@ -29,6 +29,35 @@
 > example: Tr = Top tile that is red
 
 
+<H3>Output:</H3>
+The executable will give stpe-by step instructions on the solution in the form of:<br>
+1. Iteration #
+2. Instructional wording
+3. Resulting columns and rows diagram
 
+<code>
+Iteration: 0
+Starting Position
+Tw  Ty  Mg  Tg
+Mw  My  Tr  Mg
+Bw  My  Mr  Mr
+__  By  Bg  Br
 
+Iteration: 1
+Move square Down
+__  Ty  Mg  Tg
+Tw  My  Tr  Mg
+Mw  My  Mr  Mr
+Bw  By  Bg  Br
 
+Iteration: 2
+Rotate Top to the Right
+Tg  __  Ty  Mg
+Tw  My  Tr  Mg
+Mw  My  Mr  Mr
+Bw  By  Bg  Br
+</code>
+
+  .....
+
+When the wording says "Move square Up or Down", that could mean moving in mulitple steps.

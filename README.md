@@ -35,7 +35,7 @@ The executable will give stpe-by step instructions on the solution in the form o
 2. Instructional wording
 3. Resulting columns and rows diagram
 
-<code>
+<pre>
 Iteration: 0
 Starting Position
 Tw  Ty  Mg  Tg
@@ -56,7 +56,7 @@ Tg  __  Ty  Mg
 Tw  My  Tr  Mg
 Mw  My  Mr  Mr
 Bw  By  Bg  Br
-</code>
+</pre>
 
   .....
 

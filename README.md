@@ -10,7 +10,7 @@
 > <code>--col 1- --col 2- --col 3- --col 4-<br>
 > tile x 4;tile x 4;tile x 4;tile x 4<br></code>
 > example: TwMwBw__;TyMyMyBy;MgTrMrBg;TgMgMrBr<br>
-> ; = just a nop charcter to help separte the pattern visually
+> ; = just a nop character to help separte the pattern visually
 
 
 <H3>Tile specification:</H3>
@@ -30,7 +30,7 @@
 
 
 <H3>Output:</H3>
-The executable will give stpe-by step instructions on the solution in the form of:<br>
+The executable will give step-by step instructions on the solution in the form of:<br>
   1. Iteration #<br>
   2. Instructional wording<br>
   3. Resulting columns and rows diagram<br>
